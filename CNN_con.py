@@ -10,10 +10,17 @@ from keras.preprocessing.image import ImageDataGenerator
 classifier = Sequential()
 
 #Step 1 - Convolution
-classifier.add(Convolution2D(filters = 32, kernel_size = 3, input_shape = (3,64,64), activation = 'relu' ))
+classifier.add(Convolution2D(filters = 32, kernel_size = 3
+                             , input_shape = (64,64,3), activation = 'relu'
+                             ,data_format='channels_first' ))
 
 #Step 2 - Pooling
-classifier.add(MaxPooling2D(pool_size = (2,2),data_format="channels_first"))
+classifier.add(MaxPooling2D(pool_size = (2,2)))
+
+#Step 3 -  Add another convolutional layer
+classifier.add(Convolution2D(filters = 32, kernel_size = 3
+                             , activation = 'relu',data_format='channels_first' ))
+classifier.add(MaxPooling2D(pool_size = (2,2)))
 
 #Step 3 - Flatten
 classifier.add(Flatten())
@@ -45,7 +52,7 @@ test_set = test_datagen.flow_from_directory('dataset/test_set',
                                                         class_mode='binary')
 
 classifier.fit_generator(training_set,
-                         steps_per_epoch=800,
+                         steps_per_epoch=8000,
                          epochs=25,
                          validation_data=test_set,
                          validation_steps=2000)
