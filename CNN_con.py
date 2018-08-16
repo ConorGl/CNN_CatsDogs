@@ -11,13 +11,15 @@ classifier = Sequential()
 
 #Step 1 - Convolution
 classifier.add(Convolution2D(filters = 32, kernel_size = 3
-                             , input_shape = (64,64,3), activation = 'relu' ))
+                             , input_shape = (64,64,3), activation = 'relu'
+                             ,data_format='channels_first' ))
 
 #Step 2 - Pooling
 classifier.add(MaxPooling2D(pool_size = (2,2)))
 
 #Step 3 -  Add another convolutional layer
-classifier.add(Convolution2D(filters = 32, kernel_size = 3, activation = 'relu'))
+classifier.add(Convolution2D(filters = 32, kernel_size = 3
+                             , activation = 'relu',data_format='channels_first' ))
 classifier.add(MaxPooling2D(pool_size = (2,2)))
 
 #Step 3 - Flatten
